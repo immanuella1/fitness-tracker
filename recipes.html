@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Book</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+        .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+        .w3-container h1, .w3-container p {
+            font-weight: bold;
+        }
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 50px;
+        }
+        .recipe {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .recipe img {
+            max-width: 100%;
+            height: auto;
+        }
+        .recipe h3 {
+            margin-top: 0;
+        }
+        .recipe p {
+            margin-bottom: 0;
+        }
+        .ingredients {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .steps {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="w3-top">
+ <div class="w3-bar w3-white w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="home.html" class="w3-bar-item w3-button w3-padding-large w3-brown">Home</a>
+    <a href="info.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-brown">Resources</a>
+    <a href="recipes.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-brown">Recipes</a>
+    <a href="login.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-brown">Login</a>
+ </div>
+
+ <!-- Navbar on small screens -->
+ <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="home.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="info.html" class="w3-bar-item w3-button w3-padding-large">Resources</a>
+    <a href="recipes.html" class="w3-bar-item w3-button w3-padding-large">Recipes</a>
+    <a href="login.php" class="w3-bar-item w3-button w3-padding-large">Login</a>
+ </div>
+</div>
+
+<script>
+function myFunction() {
+ var x = document.getElementById("navDemo");
+ if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+ } else { 
+    x.className = x.className.replace(" w3-show", "");
+ }
+}
+</script>
+
+<div class="container">
+    <h1 class="section-title">Recipe Book</h1>
+
+    <!-- Vegetarian Chickpea Curry -->
+    <div class="recipe">
+        <h3>Vegetarian Chickpea Curry</h3>
+        <img src="/Applications/XAMPP/xamppfiles/htdocs/fitness-tracker/imagenes" alt="Mediterranean Chickpea Salad">
+
+        <h4>Ingredients:</h4>
+        <ul class="ingredients">
+            <li>1 can chickpeas, drained and rinsed</li>
+            <li>1 onion, diced</li>
+            <li>2 cloves garlic, minced</li>
+            <li>1 bell pepper, diced</li>
+            <li>1 cup diced tomatoes</li>
+            <li>1 cup coconut milk</li>
+            <li>1 tablespoon curry powder</li>
+            <li>Salt and pepper to taste</li>
+            <li>Fresh cilantro for garnish</li>
+        </ul>
+        <h4>Instructions:</h4>
+        <ol class="steps">
+            <li>In a large skillet, sauté onions and garlic until translucent.</li>
+            <li>Add diced bell pepper and cook until slightly softened.</li>
+            <li>Stir in curry powder and cook for another minute.</li>
+            <li>Add diced tomatoes, coconut milk, and chickpeas. Bring to a simmer.</li>
+            <li>Let the curry simmer for about 15-20 minutes, stirring occasionally, until it thickens.</li>
+            <li>Season with salt and pepper to taste. Garnish with fresh cilantro before serving. Serve with rice or naan bread.</li>
+        </ol>
+    </div>
+
+    <!-- Add more recipes here following the same structure -->
+<!-- Turkey and Vegetable Stir-Fry -->
+<div class="recipe">
+    <h3>Turkey and Vegetable Stir-Fry</h3>
+    <h4>Ingredients:</h4>
+    <ul class="ingredients">
+        <li>1 lb ground turkey</li>
+        <li>Assorted vegetables (such as broccoli, bell peppers, snow peas)</li>
+        <li>Soy sauce</li>
+        <li>Garlic powder</li>
+        <li>Ginger powder</li>
+        <li>Sesame oil</li>
+        <li>Cooked brown rice or quinoa for serving</li>
+    </ul>
+    <h4>Instructions:</h4>
+    <ol class="steps">
+        <li>Heat sesame oil in a large skillet or wok over medium-high heat.</li>
+        <li>Add ground turkey and cook until browned, breaking it into crumbles.</li>
+        <li>Add chopped vegetables to the skillet and stir-fry until they're tender yet crisp.</li>
+        <li>Season with soy sauce, garlic powder, and ginger powder to taste.</li>
+        <li>Serve the stir-fry over cooked brown rice or quinoa.</li>
+    </ol>
+</div>
+
+<!-- Grilled Chicken Salad with Balsamic Dressing -->
+<div class="recipe">
+    <h3>Grilled Chicken Salad with Balsamic Dressing</h3>
+    <h4>Ingredients:</h4>
+    <ul class="ingredients">
+        <li>Grilled chicken breast, sliced</li>
+        <li>Mixed greens (such as spinach, arugula, lettuce)</li>
+        <li>Cherry tomatoes, halved</li>
+        <li>Cucumber, sliced</li>
+        <li>Red onion, thinly sliced</li>
+        <li>Avocado, sliced</li>
+        <li>Balsamic vinaigrette dressing</li>
+        <li>Salt and pepper to taste</li>
+    </ul>
+    <h4>Instructions:</h4>
+    <ol class="steps">
+        <li>Arrange mixed greens on a serving platter.</li>
+        <li>Top with grilled chicken slices, cherry tomatoes, cucumber, red onion, and avocado.</li>
+        <li>Drizzle with balsamic vinaigrette dressing.</li>
+        <li>Season with salt and pepper to taste. Serve immediately.</li>
+    </ol>
+</div>
+
+
+
+<!-- Mediterranean Chickpea Salad -->
+<div class="recipe">
+    <h3>Mediterranean Chickpea Salad</h3>
+    <h4>Ingredients:</h4>
+    <ul class="ingredients">
+        <li>1 can chickpeas, drained and rinsed</li>
+        <li>Cucumber, diced</li>
+        <li>Cherry tomatoes, halved</li>
+        <li>Red onion, finely chopped</li>
+        <li>Kalamata olives, pitted and halved</li>
+        <li>Feta cheese, crumbled</li>
+        <li>Fresh parsley, chopped</li>
+        <li>Olive oil</li>
+        <li>Lemon juice</li>
+        <li>Salt and pepper to taste</li>
+    </ul>
+    <h4>Instructions:</h4>
+    <ol class="steps">
+        <li>In a large bowl, combine chickpeas, diced cucumber, halved cherry tomatoes, chopped red onion, halved Kalamata olives, and crumbled feta cheese.</li>
+        <li>Drizzle with olive oil and lemon juice.</li>
+        <li>Add chopped fresh parsley and toss to combine.</li>
+        <li>Season with salt and pepper to taste. Serve chilled.</li>
+    </ol>
+</div>
+
+<!-- Vegetable and Tofu Stir-Fry with Brown Rice -->
+<div class="recipe">
+    <h3>Vegetable and Tofu Stir-Fry with Brown Rice</h3>
+    <h4>Ingredients:</h4>
+    <ul class="ingredients">
+        <li>Firm tofu, pressed and cubed</li>
+        <li>Assorted vegetables (such as bell peppers, broccoli, carrots, snap peas)</li>
+        <li>Soy sauce</li>
+        <li>Garlic, minced</li>
+        <li>Ginger, grated</li>
+        <li>Brown rice, cooked</li>
+        <li>Sesame oil</li>
+        <li>Green onions, chopped (optional)</li>
+    </ul>
+    <h4>Instructions:</h4>
+    <ol class="steps">
+        <li>Heat sesame oil in a large skillet or wok over medium-high heat.</li>
+        <li>Add minced garlic and grated ginger, sauté for a minute.</li>
+        <li>Add tofu cubes and cook until golden brown on all sides.</li>
+        <li>Add assorted vegetables to the skillet and stir-fry until they're tender yet crisp.</li>
+        <li>Season with soy sauce to taste and toss to combine.</li>
+        <li>Serve the stir-fry over cooked brown rice, garnished with chopped green onions if desired.</li>
+    </ol>
+</div>
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

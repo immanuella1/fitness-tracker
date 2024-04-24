@@ -1,10 +1,11 @@
 <?php
-
-
-define( 'DB_NAME', 'fitness' );
-define( 'DB_USER', 'immanuella1' );
-define( 'DB_PASSWORD', 'admin' );
-define( 'DB_HOST', 'localhost' );
+session_start();
+include 'Fitnesstracker.php'; 
+//$link =mysqli_connect('localhost','immanuella1', 'admin', 'fitness', '3306') 
+//define( 'DB_NAME', 'fitness' );
+//define( 'DB_USER', 'immanuella1' );
+//define( 'DB_PASSWORD', 'admin' );
+//define( 'DB_HOST', 'localhost' );
 
 $servername = "localhost";
 $username = "immanuella1";
@@ -21,8 +22,7 @@ if ($conn->connect_error) {
 ?>
 
 <?php
-session_start();
-include 'Fitnesstracker.php'; // Include the database connection file
+// Include the database connection file
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, start a session and redirect to the homepage
             $_SESSION["loggedin"] = true;
             $_SESSION["username"] = $username;
-            header("Location: homepage.php");
+            header("Location: user.php");
             exit;
         } else {
             $error_message = "Invalid password.";
