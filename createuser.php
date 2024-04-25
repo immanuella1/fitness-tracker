@@ -28,14 +28,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
     $email = $_POST["email"];
+    $age = $_POST["age"];
+    $gender = $_POST["gender"];
+    $height = $_POST["height"];
+    $weight = $_POST["weight"];
+    $bmi = $_POST["bmi"];
+    $intensity = $_POST["intensity"];
 
-    $sql = "SELECT * FROM user WHERE username = ? AND email = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $username, $email, $password);
+    echo"$email";
+
+    //INSERT statement created
+    
+    //$sql = "SELECT * FROM user WHERE username = ? AND email = ? AND password = ?";
+    $sql = "INSERT INTO user (username, password, email, age, gender, height, weight, bmi, intensity_pref) VALUES ('username', 'password', 'email', 'age', 'gender', 'height', 'weight', 'bmi', 'intensity_pref')";
+    /*$stmt = $conn -> prepare($sql);*/
+    
+    if ($conn->query($sql) === TRUE) {
+        // If the insertion was successful
+        echo "New record created successfully";
+        $_SESSION["loggedin"] = true;
+        $_SESSION["username"] = $username;
+        header("Location: user.php");
+    exit;
+    }else {
+    // If there was an error during insertion
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    
+    //$result = $conn->query($sql);
+   /* $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssss", $username, $password, $email, $age, $gender, $height, $weight, $bmi, $intensity);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
+    echo "$result";*/
+    
+}
+    /*if ($result->num_rows > 0) {
         // User exists, check password
         $user = $result->fetch_assoc();
         $_SESSION["loggedin"] = true;
@@ -51,16 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $error_message = "Invalid password.";
         }*/
-    } else {
-        $error_message = "Invalid username/email/password combination.";
-    }
+    /*} else {
+        $error_message = "Error creating user.";
+    }*/
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Login Page</title>
+<title>Create User Page</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -103,9 +131,9 @@ body {
  </div>
 </div>
 
-<!-- Login Form -->
+<!-- Create User Form -->
 <div class="w3-container w3-center" style="padding:128px 16px">
- <h1 class="w3-margin w3-jumbo">Login</h1>
+ <h1 class="w3-margin w3-jumbo">Create User</h1>
  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <div class="w3-section">
       <label for="username">Username</label>
@@ -114,12 +142,25 @@ body {
       <input class="w3-input w3-border" type="email" id="email" name="email" required>
       <label for="password">Password</label>
       <input class="w3-input w3-border" type="password" id="password" name="password" required>
-      <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" type="submit">Login</button>
+      <label for="age">Age</label>
+      <input class="w3-input w3-border" type="text" id="age" name="age" required>
+      <label for="gender">Gender</label>
+      <input class="w3-input w3-border" type="text" id="gender" name="gender" required>
+      <label for="height">Height</label>
+      <input class="w3-input w3-border" type="text" id="height" name="height" required>
+      <label for="weight">Weight</label>
+      <input class="w3-input w3-border" type="text" id="weight" name="weight" required>
+      <label for="bmi">BMI</label>
+      <input class="w3-input w3-border" type="text" id="bmi" name="bmi" required>
+      <label for="intensity">Intensity</label>
+      <input class="w3-input w3-border" type="text" id="intensity" name="intensity" required>
+      <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" type="submit">Create User</button>
     </div>
  </form>
  <?php
  if (isset($error_message)) {
       echo "<p style='color:red;'>" . $error_message . "</p>";
+      echo "<p style='color:red;'>" . $result . "</p>";
  }
  ?>
 </div>

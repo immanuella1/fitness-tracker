@@ -1,55 +1,74 @@
 <?php
 session_start();
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if symptoms are selected
-    if (isset($_POST["symptoms"])) {
-        // Fetch user's information and intensity preference from session
-        $age = $_SESSION['age'];
-        $gender = $_SESSION['gender'];
-        $height = $_SESSION['height'];
-        $weight = $_SESSION['weight'];
-        $bmi = $_SESSION['bmi'];
-        $intensity_pref = $_SESSION['intensity_pref'];
+$servername = "localhost";
+$username = "immanuella1";
+$password = "admin";
+$dbname = "fitness";
 
-        // Check the selected symptoms
-        $symptoms = $_POST["symptoms"];
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-         // If the user is underweight or overweight and intensity_pref is high, assign 10 random workouts
-         if ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'h') {
-          // Your code to assign 10 random workouts from the exercise table
-      } 
-      // If the user has body pain and intensity_pref is high, assign 7 random stretches
-      elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'h') {
-          // Your code to assign 7 random stretches
-      }
-      // If the user is underweight or overweight and intensity_pref is medium, assign 5 random workouts
-      elseif ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'm') {
-          // Your code to assign 5 random workouts from the exercise table
-      } 
-      // If the user has body pain and intensity_pref is medium, assign 3 random stretches
-      elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'm') {
-          // Your code to assign 3 random stretches
-      }
-      // If the user is underweight or overweight and intensity_pref is low, assign 3 random workouts
-      elseif ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'l') {
-          // Your code to assign 3 random workouts from the exercise table
-      } 
-      // If the user has body pain and intensity_pref is low, assign 2 random stretches
-      elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'l') {
-          // Your code to assign 2 random stretches
-      }
-
-      // Redirect the user to personalized.php
-      header("Location: personalized.php");
-      exit;
-  }
+// Check connection
+if ($conn->connect_error) {
+ die("Connection failed: " . $conn->connect_error);
 }
 ?>
 
-<!-- Add the rest of your HTML code here -->
+<?php
+// Include the database connection file
 
+/*if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $email = $_POST["email"];
+    $age = $_POST["age"];
+    $gender = $_POST["gender"];
+    $height = $_POST["height"];
+    $weight = $_POST["weight"];
+    $bmi = $_POST["bmi"];
+    $intensity = $_POST["intensity"];}*/
+
+    //UPDATE statement created
+    $stmt = $conn->prepare("UPDATE user SET weight = ? WHERE username = ?");
+    $stmt->bind_param("ds", $newWeight, $username);
+
+    if ($stmt->execute()) {
+        echo "Weight updated successfully.";
+    } else {
+        echo "Error updating weight: " . $stmt->error;
+    }
+
+    // Close statement and connection
+    $stmt->close();
+    
+
+// Check if the form is submitted
+/*if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if symptoms are selected
+    if (isset($_POST["symptoms"])) {
+        // Check the selected symptoms
+        $symptoms = $_POST["symptoms"];
+
+        // If the user is underweight or overweight, assign 10 random workouts
+        if (in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) {
+            // Your code to assign 10 random workouts from the exercise table
+            // Query the database, select 10 random workouts, and assign them to the user
+            // Example: $workouts = get_random_workouts(10);
+        } 
+        // If the user has body pain, assign 7 random stretches
+        elseif (in_array("body_pain", $symptoms)) {
+            // Your code to assign 7 random stretches
+            // Query the database, select 7 random stretches, and assign them to the user
+            // Example: $stretches = get_random_stretches(7);
+        }
+
+        // Redirect the user to personalized.php
+        header("Location: personalized.php");
+        exit;
+    }
+}*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,6 +140,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   </div>
 </div>
 
+    
+
 <script>
 
 function myFunction() {
@@ -132,37 +153,16 @@ function myFunction() {
   }
 }
 </script>
+
 <div class="container">
-    <h1 class="section-title">Account</h1>
-    <form method="post" action="personalizeduser.php">
-    <!-- Add user's information -->
-    <div class="article">
-    <p>Hi <?php echo $_SESSION['username'];?>!</p>
-    <p>Here's your data:</p>
-    <p> Age:<?php echo $_SESSION['age']; ?></p>
-    <p>Gender: <?php echo $_SESSION['gender']; ?></p>
-    <p>Height:<?php echo $_SESSION['height']; ?></p>
-    <p>Weight:<?php echo $_SESSION['weight']; ?></p>
-    <p>BMI: <?php echo $_SESSION['bmi']; ?></p>
-    <p>Intensity preference:<?php echo $_SESSION['intensity_pref']; ?></p>
+    <h1 class="section-title">Your Personalized Page</h1>
+        <p>Would you like to update your weight data?</p>
+    <form method="post" action="user.php">
+        <label for="weight">New Weight:</label>
+        <input type="number" id="weight" name="weight" required>
+        <input type="submit" value="Update Weight">
+    </form>
 </div>
 
-    <!-- Add survey questions -->
-    <div class="article">
-    <h3>Issues</h3>
-    <p>What are you experiencing?</p>
-    <input type="radio" name="symptoms" value="underweight"> Underweight<br>
-    <input type="radio" name="symptoms" value="overweight"> Overweight<br>
-    <input type="radio" name="symptoms" value="body_pain"> Body Pain<br>
-    <button type="submit">Submit</button>
-</div>
-
-</form>
-
-    
-</form>
 
 
-
-</body>
-</html>
