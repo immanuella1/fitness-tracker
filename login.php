@@ -35,11 +35,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    //$result = mysql_query($query);
+    
     if ($result->num_rows > 0) {
         // User exists, check password
         $user = $result->fetch_assoc();
         $_SESSION["loggedin"] = true;
         $_SESSION["username"] = $username;
+        $_SESSION['age']= $user['age'];
+        $_SESSION['gender']= $user['gender'];
+        $_SESSION['height']= $user['height'];
+        $_SESSION['weight']= $user['weight'];
+        $_SESSION['bmi']= $user['bmi'];
+        $_SESSION['intensity']= $user['intensity_pref'];
+        echo $row['age'];
+
         header("Location: user.php");
         exit;
         /*if (password_verify($password, $user['password'])) {

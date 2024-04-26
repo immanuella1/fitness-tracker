@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if symptoms are selected
     if (isset($_POST["symptoms"])) {
@@ -11,45 +10,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $height = $_SESSION['height'];
         $weight = $_SESSION['weight'];
         $bmi = $_SESSION['bmi'];
-        $intensity_pref = $_SESSION['intensity_pref'];
+        $intensity = $_SESSION['intensity'];
 
         // Check the selected symptoms
         $symptoms = $_POST["symptoms"];
-
+        $_SESSION['symptoms']=$symptoms;
+/*
          // If the user is underweight or overweight and intensity_pref is high, assign 10 random workouts
          if ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'h') {
-          // Your code to assign 10 random workouts from the exercise table
+          // assign 10 random workouts from the exercise table
       } 
       // If the user has body pain and intensity_pref is high, assign 7 random stretches
       elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'h') {
-          // Your code to assign 7 random stretches
+          // assign 7 random stretches
       }
       // If the user is underweight or overweight and intensity_pref is medium, assign 5 random workouts
       elseif ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'm') {
-          // Your code to assign 5 random workouts from the exercise table
+          // assign 5 random workouts from the exercise table
       } 
       // If the user has body pain and intensity_pref is medium, assign 3 random stretches
       elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'm') {
-          // Your code to assign 3 random stretches
+          // assign 3 random stretches
       }
       // If the user is underweight or overweight and intensity_pref is low, assign 3 random workouts
       elseif ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'l') {
-          // Your code to assign 3 random workouts from the exercise table
+          // assign 3 random workouts from the exercise table
       } 
       // If the user has body pain and intensity_pref is low, assign 2 random stretches
       elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'l') {
-          // Your code to assign 2 random stretches
-      }
+          // assign 2 random stretches
+      }*/
 
       // Redirect the user to personalized.php
-      header("Location: personalized.php");
+      header("Location: personalizeduser.php");
       exit;
   }
 }
+
 ?>
-
-<!-- Add the rest of your HTML code here -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,17 +132,19 @@ function myFunction() {
 </script>
 <div class="container">
     <h1 class="section-title">Account</h1>
-    <form method="post" action="personalizeduser.php">
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+  
     <!-- Add user's information -->
+    <!--$result = mysql_query($query);while ($row = mysql_fetch_array($result)) {echo $row['age']echo $row[]} -->
     <div class="article">
     <p>Hi <?php echo $_SESSION['username'];?>!</p>
     <p>Here's your data:</p>
-    <p> Age:<?php echo $_SESSION['age']; ?></p>
+    <p>Age: <?php echo $_SESSION['age']; ?></p>
     <p>Gender: <?php echo $_SESSION['gender']; ?></p>
     <p>Height:<?php echo $_SESSION['height']; ?></p>
-    <p>Weight:<?php echo $_SESSION['weight']; ?></p>
+    <p>Weight: <?php echo $_SESSION['weight']; ?></p>
     <p>BMI: <?php echo $_SESSION['bmi']; ?></p>
-    <p>Intensity preference:<?php echo $_SESSION['intensity_pref']; ?></p>
+    <p>Intensity preference: <?php echo $_SESSION['intensity']; ?></p>
 </div>
 
     <!-- Add survey questions -->
@@ -158,10 +158,134 @@ function myFunction() {
 </div>
 
 </form>
+ <?php
 
-    
+ //Create a delete button on click that button brings up a textbox that will prompt the user to enter their password, once they hit
+ //submit on that form, the password that they enter will be verified with the email, (email password combination is found then delete the account)
+ //Tw queries: select row where username = session(username) and password = password ($_SESSION['verify_password'])
+ //if this returns a row then the user pass combo is found and you can continue to delete the account
+ //DELETE FROM user WHERE username = $_SESSION['username'] AND password = $_SESSION['verify_password']
+ //go to phpmyadmin adn make sure it is actually deleted
+ 
+$servername = "localhost";
+$username = "immanuella1";
+$password = "admin";
+$dbname = "fitness";
+
+ $conn = new mysqli($servername, $username, $password, $dbname);
+
+ // Check connection
+ if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+ }
+
+ $sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+$stmt = $conn->prepare($sql);
+
+// Bind parameters
+$stmt->bind_param("ss", $_SESSION['username'], $_SESSION['verify_password']);
+
+// Execute query
+$stmt->execute();
+
+// Get result
+$result = $stmt->get_result();
+
+// Check if a row is returned
+if ($result->num_rows > 0) {
+    // Delete the user account
+    $delete_sql = "DELETE FROM user WHERE username = ? AND password = ?";
+    $delete_stmt = $conn->prepare($delete_sql);
+    $delete_stmt->bind_param("ss", $_SESSION['username'], $_SESSION['verify_password']);
+    if ($delete_stmt->execute()) {
+        // Check if deletion was successful
+        if ($delete_stmt->affected_rows > 0) {
+            echo "Account deleted successfully.";
+        } else {
+            echo "Error deleting account.";
+        }
+    } else {
+        echo "Error executing deletion query: " . $delete_stmt->error;
+    }
+} else {
+    echo "Invalid username/password combination.";
+}
+
+?>
+ 
+ 
 </form>
 
+<title>Delete Account</title>
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+</style>
+</head>
+<body>
+
+<div class="article">
+    <h3>Delete Account</h3>
+    <p>Would you like to delete your account?</p>
+    <button id="deleteBtn" type="button">Yes</button>
+</div>
+
+<div id="popup" class="popup">
+    <h3>Confirm Deletion</h3>
+    <p>Please enter your password to confirm deletion:</p>
+    <form id="deleteForm" action="user.php" method="post">
+    <input id="passwordInput" type="password" placeholder="Enter your password">
+    <button id="confirmBtn" type="button">Confirm</button>
+    <button id="cancelBtn" type="button">Cancel</button>
+</div>
+
+<script>
+    // Get references to elements
+    const deleteBtn = document.getElementById('deleteBtn');
+    const popup = document.getElementById('popup');
+    const passwordInput = document.getElementById('passwordInput');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    // Function to show the popup
+    function showPopup() {
+        popup.style.display = 'block';
+    }
+
+    // Function to hide the popup
+    function hidePopup() {
+        popup.style.display = 'none';
+    }
+
+    // Event listener for delete button click
+    deleteBtn.addEventListener('click', function() {
+        showPopup();
+    });
+
+    // Event listener for cancel button click
+    cancelBtn.addEventListener('click', function() {
+        hidePopup();
+    });
+
+    // Event listener for confirm button click
+    confirmBtn.addEventListener('click', function() {
+        const password = passwordInput.value;
+        
+        console.log('Password entered:', password);
+        
+        hidePopup();
+    });
+</script>
 
 
 </body>

@@ -1,11 +1,5 @@
 <?php
 session_start();
-//include 'Fitnesstracker.php'; 
-//$link =mysqli_connect('localhost','immanuella1', 'admin', 'fitness', '3306') 
-//define( 'DB_NAME', 'fitness' );
-//define( 'DB_USER', 'immanuella1' );
-//define( 'DB_PASSWORD', 'admin' );
-//define( 'DB_HOST', 'localhost' );
 
 $servername = "localhost";
 $username = "immanuella1";
@@ -38,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo"$email";
 
     //INSERT statement created
-    
+
     //$sql = "SELECT * FROM user WHERE username = ? AND email = ? AND password = ?";
-    $sql = "INSERT INTO user (username, password, email, age, gender, height, weight, bmi, intensity_pref) VALUES ('username', 'password', 'email', 'age', 'gender', 'height', 'weight', 'bmi', 'intensity_pref')";
+    $sql = "INSERT INTO user (username, password, email, age, gender, height, weight, bmi, intensity_pref) VALUES ('$username', '$password', '$email', '$age', '$gender', '$height', '$weight', '$bmi', '$intensity')";
     /*$stmt = $conn -> prepare($sql);*/
     
     if ($conn->query($sql) === TRUE) {
@@ -48,41 +42,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "New record created successfully";
         $_SESSION["loggedin"] = true;
         $_SESSION["username"] = $username;
+        $_SESSION['age']= $age;
+        $_SESSION['gender']= $gender;
+        $_SESSION['height']= $height;
+        $_SESSION['weight']= $weight;
+        $_SESSION['bmi']= $bmi;
+        $_SESSION['intensity']= $intensity;
+            //echo $row['']
+          }
         header("Location: user.php");
     exit;
     }else {
     // If there was an error during insertion
     echo "Error: " . $sql . "<br>" . $conn->error;
-    
-    //$result = $conn->query($sql);
-   /* $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $username, $password, $email, $age, $gender, $height, $weight, $bmi, $intensity);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    echo "$result";*/
-    
-}
-    /*if ($result->num_rows > 0) {
-        // User exists, check password
-        $user = $result->fetch_assoc();
-        $_SESSION["loggedin"] = true;
-        $_SESSION["username"] = $username;
-        header("Location: user.php");
-        exit;
-        /*if (password_verify($password, $user['password'])) {
-            // Password is correct, start a session and redirect to the homepage
-            $_SESSION["loggedin"] = true;
-            $_SESSION["username"] = $username;
-            header("Location: user.php");
-            exit;
-        } else {
-            $error_message = "Invalid password.";
-        }*/
-    /*} else {
-        $error_message = "Error creating user.";
-    }*/
-}
+   
+    }
 ?>
 
 <!DOCTYPE html>
