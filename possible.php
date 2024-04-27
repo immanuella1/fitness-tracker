@@ -15,35 +15,6 @@ if ($conn->connect_error) {
 }
 ?>
 
-<?php
-// Include the database connection file
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_SESSION["username"];
-    
-    $newWeight = $_POST["weight"];
-   
-    $_SESSION['weight'] = $newWeight;
-
-    //UPDATE statement created
-    $stmt = $conn->prepare("UPDATE user SET weight = ? WHERE username = ?");
-    $stmt->bind_param("ds", $newWeight, $username);
-
-    if ($stmt->execute()) {
-        echo "Weight updated successfully.";
-    } else {
-        echo "Error updating weight: " . $stmt->error;
-        $error_message = "Update fail.";
-    }
-
-    // Close statement and connection
-    $stmt->close();
-    header("Location: user.php");
-    exit;
-}
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,58 +101,48 @@ function myFunction() {
 </script>
 
 <div class="container">
-    <h1 class="section-title">Your Personalized Page</h1>
+    <h1 class="section-title">WORKOUTS</h1>
 
     <?php
 
     // here we choose the specific queries based on the symptom the user chose on the user page.
-        $symptoms = $_SESSION['symptoms'];
-        $char = $_SESSION['intensity'];
-        $sql = "SELECT name, exercise_type, duration, intensity, muscle_group, weights_required FROM exercise WHERE intensity = $char LIMIT 5";
-        $count_sql = "SELECT COUNT(*) as total FROM exercise WHERE intensity = $char";
-        if($symptoms === 'underweight'){
-            $sql = "SELECT name, exercise_type, duration, intensity, muscle_group, weights_required FROM exercise WHERE exercise_type = 'Workout' AND intensity = '$char' LIMIT 5";
-            $count_sql = "SELECT COUNT(*) as total FROM exercise WHERE exercise_type = 'Workout' AND intensity = '$char'";
-        }else if($symptoms === 'overweight'){
-            $sql = "SELECT name, exercise_type, duration, intensity, muscle_group, weights_required FROM exercise WHERE exercise_type = 'Workout' AND intensity = '$char' LIMIT 5";
-            $count_sql = "SELECT COUNT(*) as total FROM exercise WHERE exercise_type = 'Workout' AND intensity = '$char'";
-        }else if($symptoms === 'body_pain'){
-            $sql = "SELECT name, exercise_type, duration, intensity, muscle_group, weights_required FROM exercise WHERE exercise_type = 'Stretch' LIMIT 5";
-            $count_sql = "SELECT COUNT(*) as total FROM exercise WHERE exercise_type = 'Stretch' AND intensity = '$char'";
-        }
+        //$symptoms = $_SESSION['symptoms'];
+        //$char = $_SESSION['intensity'];
+        //$sql = "SELECT name, exercise_type, duration, intensity, muscle_group, weights_required FROM exercise WHERE intensity = $char LIMIT 5";
+        $sql = "SELECT DISTINCT name, exercise_type, intensity, intensity_pref FROM user INNER JOIN exercise ON intensity_pref = intensity WHERE intensity IN (
+            SELECT DISTINCT intensity 
+            FROM exercise 
+            WHERE intensity_pref = intensity
+        )";
+       
+        //$count_sql = "SELECT COUNT(DISTINCT username) as total FROM user INNER JOIN exercise ON intensity_pref = intensity";
+        $count_sql = "SELECT COUNT(DISTINCT name) as total FROM exercise INNER JOIN user ON intensity = intensity_pref WHERE intensity = (
+            SELECT DISTINCT intensity 
+            FROM exercise 
+            WHERE intensity = intensity_pref
+        )";
 
         $count_result = $conn->query($count_sql);
         //AGGREGATE FUNCTION
         $data =mysqli_fetch_assoc($count_result);
-        echo "Total Possible Workouts: " . $data["total"]. "<br>";
+        //echo "Total Possible Workouts: " . $data["total"]. "<br>";
 
         $result = $conn->query($sql);
 
-        //DISPLAY 
+        //DISPLAY FIVE EXERCISES -- use LIMIT to only tak 5 records
         if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
             //echo "Name: " . $row["name"]. " " . $row["lastname"]. "id: " . $row["id"]. "<br>";
-            echo "<div class='article'> <h3> " .$row['name']. "</h3><p> Type: " .$row['exercise_type']. " Duration:" .$row['duration']. " Intensity: " .$row['intensity']. "<br> Muscle Group: " .$row['muscle_group']. " Weights Required: " .$row['weights_required']." </p></div>";
+            echo "<div class='article'> <h3> " .$row['name']. "</h3><p> Type: " .$row['exercise_type']. " Intensity: " .$row['intensity']. "</p></div>";
         }
 
         } else {
         echo "0 results";
         }
     ?>
-        <p>Would you like to update your weight data?</p>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <label for="weight">New Weight:</label>
-        <input type="number" id="weight" name="weight" required>
-        <input type="submit" value="Update Weight">
-    </form>
 
-    <div class="article">
-<h3>Other Workouts</h3>
-    <p>Would you like to see all workouts that match your intensity?</p>
-       <a href="possible.php"><button id="yesbtn" type="submit">Yes</button></a>
-
-</div>
+        <div class="article">
 
 
 </div>
@@ -192,6 +153,3 @@ function myFunction() {
       echo "<p style='color:red;'>" . $error_message . "</p>";
  }
  ?>
-
-
-

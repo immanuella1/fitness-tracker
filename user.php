@@ -15,35 +15,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check the selected symptoms
         $symptoms = $_POST["symptoms"];
         $_SESSION['symptoms']=$symptoms;
-/*
-         // If the user is underweight or overweight and intensity_pref is high, assign 10 random workouts
-         if ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'h') {
-          // assign 10 random workouts from the exercise table
-      } 
-      // If the user has body pain and intensity_pref is high, assign 7 random stretches
-      elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'h') {
-          // assign 7 random stretches
-      }
-      // If the user is underweight or overweight and intensity_pref is medium, assign 5 random workouts
-      elseif ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'm') {
-          // assign 5 random workouts from the exercise table
-      } 
-      // If the user has body pain and intensity_pref is medium, assign 3 random stretches
-      elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'm') {
-          // assign 3 random stretches
-      }
-      // If the user is underweight or overweight and intensity_pref is low, assign 3 random workouts
-      elseif ((in_array("underweight", $symptoms) || in_array("overweight", $symptoms)) && $intensity_pref === 'l') {
-          // assign 3 random workouts from the exercise table
-      } 
-      // If the user has body pain and intensity_pref is low, assign 2 random stretches
-      elseif (in_array("body_pain", $symptoms) && $intensity_pref === 'l') {
-          // assign 2 random stretches
-      }*/
 
-      // Redirect the user to personalized.php
       header("Location: personalizeduser.php");
       exit;
+  }
+
+  if (isset($_POST["passwordInput"])) {
+
+    $servername = "localhost";
+    $username = "immanuella1";
+    $password = "admin";
+    $dbname = "fitness";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if (!$conn){
+die("Connection failed:".
+mysqli_connect_error());
+}
+
+    $pass = $_POST["passwordInput"];
+    $_SESSION['vpass']=$pass;
+    $user = $_SESSION["username"];
+
+    $sql = "DELETE FROM user WHERE username = '$user' AND password = '$pass'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Record deleted succesfully";
+    }else{
+        echo "Error deleting record:".
+        mysqli_error($conn);
+    }
+    mysqli_close($conn);
+     
   }
 }
 
@@ -158,64 +161,31 @@ function myFunction() {
 </div>
 
 </form>
- <?php
 
- //Create a delete button on click that button brings up a textbox that will prompt the user to enter their password, once they hit
- //submit on that form, the password that they enter will be verified with the email, (email password combination is found then delete the account)
- //Tw queries: select row where username = session(username) and password = password ($_SESSION['verify_password'])
- //if this returns a row then the user pass combo is found and you can continue to delete the account
- //DELETE FROM user WHERE username = $_SESSION['username'] AND password = $_SESSION['verify_password']
- //go to phpmyadmin adn make sure it is actually deleted
- 
+<!--  
+
 $servername = "localhost";
 $username = "immanuella1";
 $password = "admin";
 $dbname = "fitness";
 
- $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
- // Check connection
- if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
- }
-
- $sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-$stmt = $conn->prepare($sql);
-
-// Bind parameters
-$stmt->bind_param("ss", $_SESSION['username'], $_SESSION['verify_password']);
-
-// Execute query
-$stmt->execute();
-
-// Get result
-$result = $stmt->get_result();
-
-// Check if a row is returned
-if ($result->num_rows > 0) {
-    // Delete the user account
-    $delete_sql = "DELETE FROM user WHERE username = ? AND password = ?";
-    $delete_stmt = $conn->prepare($delete_sql);
-    $delete_stmt->bind_param("ss", $_SESSION['username'], $_SESSION['verify_password']);
-    if ($delete_stmt->execute()) {
-        // Check if deletion was successful
-        if ($delete_stmt->affected_rows > 0) {
-            echo "Account deleted successfully.";
-        } else {
-            echo "Error deleting account.";
-        }
-    } else {
-        echo "Error executing deletion query: " . $delete_stmt->error;
-    }
-} else {
-    echo "Invalid username/password combination.";
+if (!$conn){
+    die("Connection failed:".
+    mysqli_connect_error());
 }
 
-?>
- 
- 
-</form>
+$sql = "DELETE FROM user WHERE username = ? AND password = ?";
+if ($conn->query($sql) === TRUE) {
+    echo "Record deleted succesfully";
+}else{
+    echo "Error deleting record:".
+    mysqli_error($conn);
+}
+mysqli_close($conn);
 
+?>-->
 <title>Delete Account</title>
 <style>
     .popup {
@@ -237,15 +207,16 @@ if ($result->num_rows > 0) {
 <div class="article">
     <h3>Delete Account</h3>
     <p>Would you like to delete your account?</p>
-    <button id="deleteBtn" type="button">Yes</button>
+    <!--<button id="deleteBtn" type="button">Yes</button>-->
+    <a href="deleteuser.php"><button id="confirmBtn" type="submit">Confirm</button></a>
 </div>
 
 <div id="popup" class="popup">
     <h3>Confirm Deletion</h3>
     <p>Please enter your password to confirm deletion:</p>
-    <form id="deleteForm" action="user.php" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <input id="passwordInput" type="password" placeholder="Enter your password">
-    <button id="confirmBtn" type="button">Confirm</button>
+    <a href="home.html"><button id="confirmBtn" type="submit">Confirm</button></a>
     <button id="cancelBtn" type="button">Cancel</button>
 </div>
 
