@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Education</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+        .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+        .w3-container h1, .w3-container p {
+            font-weight: bold;
+        }
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .article {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .article img {
+            max-width: 100%;
+            height: auto;
+        }
+        .article h3 {
+            margin-top: 0;
+        }
+        .article p {
+            margin-bottom: 0;
+        }
+
+        .bold-text {
+    display: block; /* Ensures the text is on a new line */
+    font-weight: bold;
+    font-size: 1.2em; /* Adjust the font size as needed */
+    margin-bottom: 5px; /* Adds some space below the bold text */
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="w3-top">
+ <div class="w3-bar w3-white w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-brown">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-brown">Resources</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-brown">Recipes</a>
+    <a href="login.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-brown">Login</a>
+ </div>
+
+ <!-- Navbar on small screens -->
+ <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Resources</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Recipes</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Login</a>
+ </div>
+</div>
+
+<script>
+function myFunction() {
+ var x = document.getElementById("navDemo");
+ if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+ } else { 
+    x.className = x.className.replace(" w3-show", "");
+ }
+}
+</script>
+
+<div class="container">
+    <h1 class="section-title">Nutrition Education</h1>
+
+    <div class="article">
+        <h3>Balanced Diet</h3>
+
+        
+        <img src="images/balancedDiet.webp" alt="Balanced Diet">
+
+        <p>A balanced diet is essential for maintaining good health. It includes a variety of foods from different food groups.</p>
+    </div>
+
+    <div class="article">
+        <h3>Carbohydrates</h3>
+        <p><strong class="bold-text">What They Are:</strong> Carbohydrates are your body's primary source of energy. They include foods like bread, rice, pasta, fruits, and vegetables.</p>
+        <p><strong class="bold-text">Importance:</strong> Carbs provide quick energy for your body and brain. They're especially important for fueling intense workouts and brain function.</p>
+        <p><strong class="bold-text">Types:</strong> Carbs can be divided into simple carbs (like sugar) and complex carbs (like whole grains and starchy vegetables). Aim for more complex carbs for sustained energy and better nutrition.</p>
+    </div>
+
+    <div class="article">
+        <h3>Proteins</h3>
+        <p><strong class="bold-text">What They Are:</strong> Proteins are essential for building and repairing tissues in your body, including muscles, organs, and skin. They're found in foods like meat, poultry, fish, eggs, dairy, legumes, and nuts.</p>
+        <p><strong class="bold-text">Importance:</strong> Protein is crucial for muscle growth and repair, immune function, and hormone production.</p>
+        <p><strong class="bold-text">Amount:</strong> Aim to include a source of protein in each meal. Examples include chicken breast, tofu, Greek yogurt, beans, or nuts.</p>
+    </div>
+
+
+    <div class="article">
+        <h3>Fats</h3>
+        <p><strong class="bold-text">What They Are:</strong> Fats are another source of energy for your body. They're found in foods like oils, butter, avocados, nuts, and fatty fish.</p>
+        <p><strong class="bold-text">Importance:</strong> Healthy fats are important for brain function, hormone production, and nutrient absorption. They also provide long-lasting energy.</p>
+        <p><strong class="bold-text">Types:</strong> Focus on unsaturated fats (found in olive oil, nuts, and avocados) and omega-3 fatty acids (found in fatty fish like salmon) for heart health.</p>
+    </div>
+
+    <div class="article">
+        <h3>Balancing Macros</h3>
+        <p><strong class="bold-text">Importance:</strong> A well-rounded diet includes a balance of carbohydrates, proteins, and fats. Each macro plays a unique role in your overall health and should be included in appropriate proportions.</p>
+        <p><strong class="bold-text">Portion Control:</strong> Pay attention to portion sizes to ensure you're getting the right balance of macros. Use tools like measuring cups, food scales, or visual guides to help with portion control.</p>
+    </div>
+
+    <div class="article">
+        <h3>Healthy Eating Tips</h3>
+        <p>Eating a variety of foods, including fruits, vegetables, lean proteins, and whole grains, can help you meet your nutritional needs.</p>
+    </div>
+
+    <div class="article">
+        <h3>Nutrition and Exercise</h3>
+        <img src="images/nutritionAndExercise.jpeg" alt="Nutrition and Exercise">
+
+        <p>Combining a balanced diet with regular physical activity can help you achieve your health and fitness goals.</p>
+    </div>
+
+    <!-- Nutrition Section -->
+    <div class="article">
+        <h3>Nutrition</h3>
+        <p><strong class="bold-text">Calories:</strong> 1 gram of carbohydrates or protein provides 4 calories, while 1 gram of fat provides 9 calories.</p>
+        <p><strong class="bold-text">Hydration:</strong> Aim to drink at least 8 glasses (8 ounces each) of water per day, but individual needs may vary based on factors like activity level and climate.</p>
+        <p><strong class="bold-text">Macronutrient Ratio:</strong> A balanced diet typically consists of around 45-65% carbohydrates, 20-35% fats, and 10-35% protein.</p>
+        <p><strong class="bold-text">Fiber Intake:</strong> Recommended daily fiber intake is around 25 grams for women and 38 grams for men.</p>
+    </div>
+
+    <!-- Fitness Section -->
+    <div class="article">
+        <h3>Fitness</h3>
+        <img src="images/fitness.jpeg" alt="Fitness">
+        <p><strong class="bold-text">Strength Training:</strong> Incorporate strength training exercises at least 2-3 times per week to build muscle mass and increase metabolism.</p>
+        <p><strong class="bold-text">Cardiovascular Exercise:</strong> Aim for at least 150 minutes of moderate-intensity aerobic activity or 75 minutes of vigorous-intensity aerobic activity per week.</p>
+        <p><strong class="bold-text">Rest and Recovery:</strong> Allow muscles at least 48 hours of rest between strength training sessions to repair and grow.</p>
+        <p><strong class="bold-text">Flexibility:</strong> Include stretching exercises to improve flexibility and reduce the risk of injury. Hold each stretch for 15-30 seconds without bouncing.</p>
+    </div>
+</div>
+
+</body>
+</html>
