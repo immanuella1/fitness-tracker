@@ -77,7 +77,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     font-weight: bold;
 }
 body {
-    background-image: url("background.png");
+    background-image: url("images/background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
